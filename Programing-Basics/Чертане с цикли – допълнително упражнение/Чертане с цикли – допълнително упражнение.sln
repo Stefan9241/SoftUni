@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Правоъгълник от 10 x 10 звездички", "Правоъгълник от 10 x 10 звездички\Правоъгълник от 10 x 10 звездички.csproj", "{724603BD-4C1B-4EBA-9634-8F4CAAA0F3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Квадрат от звездички", "Квадрат от звездички\Квадрат от звездички.csproj", "{E18DEED9-0412-4892-A5CA-BE0E402731E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Квадратна рамка", "Квадратна рамка\Квадратна рамка.csproj", "{CBD8EE6C-D4AF-4A68-A1FD-E18B62FFF7D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ромбче от звездички", "Ромбче от звездички\Ромбче от звездички.csproj", "{72AD9495-1ACA-4A4E-B215-BD8D0D227CF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Коледна елха", "Коледна елха\Коледна елха.csproj", "{B1421D8F-3738-42AF-8AE0-36B45DFA69FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{724603BD-4C1B-4EBA-9634-8F4CAAA0F3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724603BD-4C1B-4EBA-9634-8F4CAAA0F3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724603BD-4C1B-4EBA-9634-8F4CAAA0F3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724603BD-4C1B-4EBA-9634-8F4CAAA0F3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E18DEED9-0412-4892-A5CA-BE0E402731E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18DEED9-0412-4892-A5CA-BE0E402731E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18DEED9-0412-4892-A5CA-BE0E402731E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18DEED9-0412-4892-A5CA-BE0E402731E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD8EE6C-D4AF-4A68-A1FD-E18B62FFF7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD8EE6C-D4AF-4A68-A1FD-E18B62FFF7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD8EE6C-D4AF-4A68-A1FD-E18B62FFF7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD8EE6C-D4AF-4A68-A1FD-E18B62FFF7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AD9495-1ACA-4A4E-B215-BD8D0D227CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AD9495-1ACA-4A4E-B215-BD8D0D227CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AD9495-1ACA-4A4E-B215-BD8D0D227CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AD9495-1ACA-4A4E-B215-BD8D0D227CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1421D8F-3738-42AF-8AE0-36B45DFA69FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1421D8F-3738-42AF-8AE0-36B45DFA69FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1421D8F-3738-42AF-8AE0-36B45DFA69FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1421D8F-3738-42AF-8AE0-36B45DFA69FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0CB25DD-26BC-47EE-B01A-27AC8914778C}
+	EndGlobalSection
+EndGlobal
