@@ -82,7 +82,7 @@ namespace CustomDoublyLinkedList
             }
             Count++;
         }
-
+         
         public void AddLast(int element)
         {
             Node newNode = new Node()
@@ -127,6 +127,62 @@ namespace CustomDoublyLinkedList
             }
 
             throw new IndexOutOfRangeException("Empty list");
+        }
+
+        public int RemoveLast()
+        {
+            if (Count > 0)
+            {
+                int result = Tail.Value;
+
+                Node previous = Tail.Previews;
+                if (previous == null)
+                {
+                    Head = null;
+                }
+                else
+                {
+                    previous.Next = null;
+                }
+
+                Tail = previous;
+                Count--;
+
+                return result;
+            }
+
+            throw new IndexOutOfRangeException("Empty list");
+        }
+
+        public void Foreach(Action<int> action)
+        {
+            Node currentNode = Head;
+            while (currentNode != null)
+            {
+                action(currentNode.Value);
+
+                currentNode = currentNode.Next;
+            }
+        }
+
+        public int[] toArray()
+        {
+            if (Count == 0)
+            {
+                throw new IndexOutOfRangeException("Empty list");
+            }
+            int[] array = new int[Count];
+            int index = 0;
+            Node currentNode = Head;
+
+            while (currentNode != null)
+            {
+                array[index] = currentNode.Value;
+                index++;
+                currentNode = currentNode.Next;
+            }
+
+            return array;
         }
     }
 }
