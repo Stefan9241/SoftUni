@@ -1,11 +1,11 @@
 ﻿namespace CustomDoublyLinkedList
 {
-    public class Node
+    public class Node<T>
     {
         
-        public int Value { get; set; }
-        public Node Previews { get; set; }
-        public Node Next { get; set; }
+        public T Value { get; set; }
+        public Node<T> Previews { get; set; }
+        public Node<T> Next { get; set; }
 
     }
 }

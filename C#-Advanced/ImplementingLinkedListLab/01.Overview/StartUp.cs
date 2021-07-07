@@ -6,7 +6,7 @@ namespace CustomDoublyLinkedList
     {
         static void Main(string[] args)
         {
-            CustomLinkedList myList = new CustomLinkedList(new int[] { 5,7,12});
+            CustomLinkedList<int> myList = new CustomLinkedList<int>(new int[] { 5,7,12});
 
             myList.AddFirst(100);
             Console.WriteLine($"Removed last: {myList.RemoveLast()}");

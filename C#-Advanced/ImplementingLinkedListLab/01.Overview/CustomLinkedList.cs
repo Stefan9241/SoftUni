@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CustomDoublyLinkedList
 {
-    public class CustomLinkedList
+    public class CustomLinkedList<T>
     {
         /// <summary>
         /// Двойно свързан списък
@@ -13,18 +13,18 @@ namespace CustomDoublyLinkedList
         /// <summary>
         /// Брой елементи в списъка
         /// </summary>
-        public Node Head { get; set; } = null;
+        public Node<T> Head { get; set; } = null;
         /// <summary>
         /// Първи елемент
         /// </summary>
-        public Node Tail { get; set; } = null;
+        public Node<T> Tail { get; set; } = null;
         /// <summary>
         /// Последен елемент
         /// </summary>
 
-        public CustomLinkedList(int value)
+        public CustomLinkedList(T value)
         {
-            Node newNode = new Node()
+            Node<T> newNode = new Node<T>()
             {
                 Value = value,
                 Next = null,
@@ -38,7 +38,7 @@ namespace CustomDoublyLinkedList
         /// Създава списък от колекция от елементи
         /// </summary>
         /// <param name="list">Елементи,който да бъдат добавени в списъка</param>
-        public CustomLinkedList(IEnumerable<int> list)
+        public CustomLinkedList(IEnumerable<T> list)
             :this(list.First())
         {
             bool isFirst = true;
@@ -50,7 +50,7 @@ namespace CustomDoublyLinkedList
                 }
                 else
                 {
-                    Node newNode = new Node()
+                    Node<T> newNode = new Node<T>()
                     {
                         Value = item,
                         Previews = Tail,
@@ -62,9 +62,9 @@ namespace CustomDoublyLinkedList
                 }
             }
         }
-        public void AddFirst(int element)
+        public void AddFirst(T element)
         {
-            Node newNode = new Node()
+            Node<T> newNode = new Node<T>()
             {
                 Value = element
             };
@@ -83,9 +83,9 @@ namespace CustomDoublyLinkedList
             Count++;
         }
          
-        public void AddLast(int element)
+        public void AddLast(T element)
         {
-            Node newNode = new Node()
+            Node<T> newNode = new Node<T>()
             {
                 Value = element
             };
@@ -104,13 +104,13 @@ namespace CustomDoublyLinkedList
             Count++;
         }
 
-        public int RemoveFirst()
+        public T RemoveFirst()
         {
             if (Count > 0)
             {
-                int result = Head.Value;
+                T result = Head.Value;
 
-                Node second = Head.Next;
+                Node<T> second = Head.Next;
                 if (second == null)
                 {
                     Tail = null;
@@ -129,13 +129,13 @@ namespace CustomDoublyLinkedList
             throw new IndexOutOfRangeException("Empty list");
         }
 
-        public int RemoveLast()
+        public T RemoveLast()
         {
             if (Count > 0)
             {
-                int result = Tail.Value;
+                T result = Tail.Value;
 
-                Node previous = Tail.Previews;
+                Node<T> previous = Tail.Previews;
                 if (previous == null)
                 {
                     Head = null;
@@ -154,9 +154,9 @@ namespace CustomDoublyLinkedList
             throw new IndexOutOfRangeException("Empty list");
         }
 
-        public void Foreach(Action<int> action)
+        public void Foreach(Action<T> action)
         {
-            Node currentNode = Head;
+            Node<T> currentNode = Head;
             while (currentNode != null)
             {
                 action(currentNode.Value);
@@ -165,15 +165,15 @@ namespace CustomDoublyLinkedList
             }
         }
 
-        public int[] toArray()
+        public T[] toArray()
         {
             if (Count == 0)
             {
                 throw new IndexOutOfRangeException("Empty list");
             }
-            int[] array = new int[Count];
+            T[] array = new T[Count];
             int index = 0;
-            Node currentNode = Head;
+            Node<T> currentNode = Head;
 
             while (currentNode != null)
             {
