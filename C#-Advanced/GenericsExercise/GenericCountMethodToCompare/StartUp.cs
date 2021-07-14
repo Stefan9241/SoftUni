@@ -7,23 +7,23 @@ namespace GenericCountMethodToCompare
     {
         static void Main(string[] args)
         {
-            List<Box<string>> boxes = new List<Box<string>>();
+            List<Box<double>> boxes = new List<Box<double>>();
 
             int count = int.Parse(Console.ReadLine());
 
             for (int i = 0; i < count; i++)
             {
-                string value = Console.ReadLine();
+                double value = double.Parse(Console.ReadLine());
 
-                boxes.Add(new Box<string>(value));
+                boxes.Add(new Box<double>(value));
             }
 
-            string element = Console.ReadLine();
+            double element = double.Parse(Console.ReadLine());
 
             Console.WriteLine(CountGreater(boxes, element));
         }
 
-        static int CountGreater<T>(IEnumerable<Box<T>> collection, T element)
+        static double CountGreater<T>(IEnumerable<Box<T>> collection, T element)
             where T : IComparable<T>
         {
             int counter = 0;
