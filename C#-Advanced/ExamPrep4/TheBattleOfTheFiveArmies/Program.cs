@@ -9,7 +9,7 @@ namespace TheBattleOfTheFiveArmies
             int eArmor = int.Parse(Console.ReadLine());
             int numRows = int.Parse(Console.ReadLine());
 
-            char[,] matrix = new char[numRows, numRows];
+            char[][] matrix = new char[numRows][];
             int armyRow = 0;
             int armyCol = 0;
 
@@ -18,10 +18,11 @@ namespace TheBattleOfTheFiveArmies
             for (int i = 0; i < numRows; i++)
             {
                 string chars = Console.ReadLine();
-                for (int j = 0; j < numRows; j++)
+                matrix[i] = new char[chars.Length];
+                for (int j = 0; j < chars.Length; j++)
                 {
-                    matrix[i, j] = chars[j];
-                    if (matrix[i, j] == 'A')
+                    matrix[i][j] = chars[j];
+                    if (matrix[i][j] == 'A')
                     {
                         armyRow = i;
                         armyCol = j;
@@ -32,7 +33,7 @@ namespace TheBattleOfTheFiveArmies
             while (true)
             {
                 string[] command = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                matrix[int.Parse(command[1]), int.Parse(command[2])] = 'O';
+                matrix[int.Parse(command[1])][int.Parse(command[2])] = 'O';
                 if (command[0] == "up")
                 {
                     if (armyRow - 1 < 0)//doesnt move
@@ -40,7 +41,7 @@ namespace TheBattleOfTheFiveArmies
                         eArmor--;
                         if (eArmor <= 0)
                         {
-                            matrix[armyRow, armyCol] = 'X';
+                            matrix[armyRow][armyCol] = 'X';
                             break;
                         }
                         else
@@ -49,16 +50,16 @@ namespace TheBattleOfTheFiveArmies
                         }
 
                     }
-                    else if (matrix[armyRow - 1, armyCol] == 'O')//enemy
+                    else if (matrix[armyRow - 1][armyCol] == 'O')//enemy
                     {
                         eArmor -= 3;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow - 1, armyCol] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow - 1][armyCol] = 'A';
                     }
-                    else if (matrix[armyRow - 1, armyCol] == 'M')//win
+                    else if (matrix[armyRow - 1][armyCol] == 'M')//win
                     {
-                        matrix[armyRow - 1, armyCol] = '-';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow - 1][armyCol] = '-';
+                        matrix[armyRow][armyCol] = '-';
                         isWin = true;
                         eArmor--;
                         break;
@@ -66,14 +67,14 @@ namespace TheBattleOfTheFiveArmies
                     else//just move
                     {
                         eArmor--;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow - 1, armyCol] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow - 1][armyCol] = 'A';
                     }
 
                     if (eArmor <= 0)//if we die
                     {
-                        matrix[armyRow - 1, armyCol] = 'X';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow - 1][armyCol] = 'X';
+                        matrix[armyRow][armyCol] = '-';
                         armyRow--;
                         break;
                     }
@@ -87,7 +88,7 @@ namespace TheBattleOfTheFiveArmies
                         eArmor -= 1;
                         if (eArmor <= 0)
                         {
-                            matrix[armyRow, armyCol] = 'X';
+                            matrix[armyRow][armyCol] = 'X';
                             break;
                         }
                         else
@@ -95,16 +96,16 @@ namespace TheBattleOfTheFiveArmies
                             continue;
                         }
                     }
-                    else if (matrix[armyRow + 1, armyCol] == 'O')//enemy
+                    else if (matrix[armyRow + 1][armyCol] == 'O')//enemy
                     {
                         eArmor -= 3;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow + 1, armyCol] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow + 1][armyCol] = 'A';
                     }
-                    else if (matrix[armyRow + 1, armyCol] == 'M')//win
+                    else if (matrix[armyRow + 1][armyCol] == 'M')//win
                     {
-                        matrix[armyRow + 1, armyCol] = '-';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow + 1][armyCol] = '-';
+                        matrix[armyRow][armyCol] = '-';
                         isWin = true;
                         eArmor--;
                         break;
@@ -112,14 +113,14 @@ namespace TheBattleOfTheFiveArmies
                     else//just move
                     {
                         eArmor--;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow + 1, armyCol] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow + 1][armyCol] = 'A';
                     }
 
                     if (eArmor <= 0)//if we die
                     {
-                        matrix[armyRow + 1, armyCol] = 'X';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow + 1][armyCol] = 'X';
+                        matrix[armyRow][armyCol] = '-';
                         armyRow++;
                         break;
                     }
@@ -133,7 +134,7 @@ namespace TheBattleOfTheFiveArmies
                         eArmor -= 1;
                         if (eArmor <= 0)
                         {
-                            matrix[armyRow, armyCol] = 'X';
+                            matrix[armyRow][armyCol] = 'X';
                             break;
                         }
                         else
@@ -141,16 +142,16 @@ namespace TheBattleOfTheFiveArmies
                             continue;
                         }
                     }
-                    else if (matrix[armyRow, armyCol - 1] == 'O')//enemy
+                    else if (matrix[armyRow][armyCol - 1] == 'O')//enemy
                     {
                         eArmor -= 3;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow, armyCol - 1] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow][armyCol - 1] = 'A';
                     }
-                    else if (matrix[armyRow, armyCol - 1] == 'M')//win
+                    else if (matrix[armyRow][armyCol - 1] == 'M')//win
                     {
-                        matrix[armyRow, armyCol - 1] = '-';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow][armyCol - 1] = '-';
+                        matrix[armyRow][armyCol] = '-';
                         isWin = true;
                         eArmor--;
                         break;
@@ -158,14 +159,14 @@ namespace TheBattleOfTheFiveArmies
                     else//just move
                     {
                         eArmor--;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow, armyCol - 1] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow][armyCol - 1] = 'A';
                     }
 
                     if (eArmor <= 0)//if we die
                     {
-                        matrix[armyRow, armyCol - 1] = 'X';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow][armyCol - 1] = 'X';
+                        matrix[armyRow][armyCol] = '-';
                         armyCol--;
                         break;
                     }
@@ -174,12 +175,12 @@ namespace TheBattleOfTheFiveArmies
                 }
                 else if (command[0] == "right")
                 {
-                    if (armyCol + 1 == numRows)//doesnt move
+                    if (armyCol + 1 == matrix[armyRow].Length)//doesnt move
                     {
                         eArmor -= 1;
                         if (eArmor <= 0)
                         {
-                            matrix[armyRow, armyCol] = 'X';
+                            matrix[armyRow][armyCol] = 'X';
                             break;
                         }
                         else
@@ -187,16 +188,16 @@ namespace TheBattleOfTheFiveArmies
                             continue;
                         }
                     }
-                    else if (matrix[armyRow, armyCol + 1] == 'O')//enemy
+                    else if (matrix[armyRow][armyCol + 1] == 'O')//enemy
                     {
                         eArmor -= 3;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow, armyCol + 1] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow][armyCol + 1] = 'A';
                     }
-                    else if (matrix[armyRow, armyCol + 1] == 'M')//win
+                    else if (matrix[armyRow][armyCol + 1] == 'M')//win
                     {
-                        matrix[armyRow, armyCol + 1] = '-';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow][armyCol + 1] = '-';
+                        matrix[armyRow][armyCol] = '-';
                         isWin = true;
                         eArmor--;
                         break;
@@ -204,14 +205,14 @@ namespace TheBattleOfTheFiveArmies
                     else//just move
                     {
                         eArmor--;
-                        matrix[armyRow, armyCol] = '-';
-                        matrix[armyRow, armyCol + 1] = 'A';
+                        matrix[armyRow][armyCol] = '-';
+                        matrix[armyRow][armyCol + 1] = 'A';
                     }
 
                     if (eArmor <= 0)//if we die
                     {
-                        matrix[armyRow, armyCol + 1] = 'X';
-                        matrix[armyRow, armyCol] = '-';
+                        matrix[armyRow][armyCol + 1] = 'X';
+                        matrix[armyRow][armyCol] = '-';
                         armyCol++;
                         break;
                     }
@@ -229,13 +230,9 @@ namespace TheBattleOfTheFiveArmies
                 Console.WriteLine($"The army was defeated at {armyRow};{armyCol}.");
             }
 
-            for (int i = 0; i < numRows; i++)
+            foreach (var row in matrix)
             {
-                for (int j = 0; j < numRows; j++)
-                {
-                    Console.Write(matrix[i, j]);
-                }
-                Console.WriteLine();
+                Console.WriteLine(string.Join("",row));
             }
         }
     }
