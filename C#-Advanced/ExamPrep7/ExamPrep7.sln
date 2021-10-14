@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01.Cooking", "01.Cooking\01.Cooking.csproj", "{B3BAA3BB-F57F-401A-90F9-9A6962F88F70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02.Selling", "02.Selling\02.Selling.csproj", "{68A8A4CE-06AD-4570-8148-A8A6932EF472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Openning", "Openning\Openning.csproj", "{42E212F5-8F3C-4276-9A98-79EE25D21D70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3BAA3BB-F57F-401A-90F9-9A6962F88F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BAA3BB-F57F-401A-90F9-9A6962F88F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BAA3BB-F57F-401A-90F9-9A6962F88F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BAA3BB-F57F-401A-90F9-9A6962F88F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68A8A4CE-06AD-4570-8148-A8A6932EF472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68A8A4CE-06AD-4570-8148-A8A6932EF472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68A8A4CE-06AD-4570-8148-A8A6932EF472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68A8A4CE-06AD-4570-8148-A8A6932EF472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E212F5-8F3C-4276-9A98-79EE25D21D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E212F5-8F3C-4276-9A98-79EE25D21D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E212F5-8F3C-4276-9A98-79EE25D21D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E212F5-8F3C-4276-9A98-79EE25D21D70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACE6BA2C-EA26-43C0-B14E-93073EFBF19F}
+	EndGlobalSection
+EndGlobal
