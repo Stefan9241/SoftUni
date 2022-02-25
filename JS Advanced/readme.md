@@ -1,0 +1,1 @@
+![JS Advanced - January 2022 - Certificate](https://user-images.githubusercontent.com/82944412/155751163-605f3f0e-f314-4bf1-a0da-0cef8e2646ce.jpeg)
