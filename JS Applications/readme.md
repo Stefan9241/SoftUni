@@ -1,0 +1,1 @@
+![JS Applications - February 2022 - Certificate](https://user-images.githubusercontent.com/82944412/161902135-62db1558-5a74-4047-ad92-249c5410b5a9.jpeg)
