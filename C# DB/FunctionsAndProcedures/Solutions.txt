@@ -1,0 +1,158 @@
+01. Employees with Salary Above 35000
+
+Create PROC usp_GetEmployeesSalaryAbove35000
+AS
+SELECT FirstName,LastName
+FROM Employees
+WHERE Salary > 35000
+
+---------------------------------------------------------------------------------------------
+02. Employees with Salary Above Number
+
+Create PROC usp_GetEmployeesSalaryAboveNumber(@number DECIMAL(18,4))
+AS
+SELECT FirstName,LastName
+FROM Employees
+WHERE Salary >= @number
+---------------------------------------------------------------------------------------------
+03. Town Names Starting With
+
+CREATE PROC usp_GetTownsStartingWith (@input VARCHAR(50))
+AS
+SELECT Name
+FROM Towns
+WHERE name like @input + '%'
+---------------------------------------------------------------------------------------------
+04. Employees from Town
+
+CREATE Proc usp_GetEmployeesFromTown (@townName VARCHAR(30))
+AS
+SELECT FirstName,LastName
+FROM Employees as e
+JOIN Addresses as a ON e.AddressID = a.AddressID
+JOIN Towns as t ON a.TownID = t.TownID
+WHERE t.Name = @townName
+---------------------------------------------------------------------------------------------
+05. Salary Level Function
+
+CREATE FUNCTION ufn_GetSalaryLevel(@salary DECIMAL(18,4)) 
+RETURNS VARCHAR(50)
+BEGIN
+DECLARE @result VARCHAR(50)
+	IF (@salary < 30000)
+	BEGIN
+	SET @result = 'Low'
+		return @result
+	END
+	ELSE IF(@salary <= 50000)
+	BEGIN 
+		SET @result = 'Average'
+		return @result
+	END
+	SET @result = 'High'
+		return @result
+END
+---------------------------------------------------------------------------------------------
+06. Employees by Salary Level
+
+CREATE PROC usp_EmployeesBySalaryLevel(@level VARCHAR(30))
+AS
+SELECT FirstName,LastName
+FROM Employees
+WHERE dbo.ufn_GetSalaryLevel(Salary) = @level
+---------------------------------------------------------------------------------------------
+07. Define Function
+
+CREATE FUNCTION ufn_IsWordComprised(@setOfLetters VARCHAR(MAX), @word VARCHAR(MAX))
+RETURNS BIT
+AS
+BEGIN 
+	DECLARE @count INT = 1;
+
+	WHILE(@count <= LEN(@word))
+		BEGIN
+			DECLARE @currentLetter CHAR(1) = SUBSTRING(@word,@count,1);
+			IF(CHARINDEX(@currentLetter,@setOfLetters)= 0)
+				RETURN 0
+
+			SET @count +=1
+		END
+	RETURN 1
+END
+---------------------------------------------------------------------------------------------
+08. Delete Employees and Departments
+
+CREATE PROC usp_DeleteEmployeesFromDepartment (@departmentId INT)
+AS
+ALTER TABLE Departments
+ALTER COLUMN ManagerID INT NULL
+
+DELETE FROM EmployeesProjects
+WHERE EmployeeID IN (SELECT EmployeeID FROM Employees Where DepartmentID = @departmentId)
+
+UPDATE Employees
+	SET ManagerID = NULL
+ Where EmployeeID IN (SELECT EmployeeID FROM Employees WHERE DepartmentID = @departmentId)
+
+UPDATE Employees
+	SET ManagerID = NULL
+WHERE ManagerID IN (SELECT EmployeeID FROM Employees WHERE DepartmentID = @departmentId)
+
+UPDATE Departments
+	SET ManagerID = NULL
+WHERE DepartmentID = @departmentId
+
+DELETE FROM Employees
+	WHERE DepartmentID = @departmentId
+
+DELETE FROM Departments
+	WHERE DepartmentID = @departmentId
+
+SELECT COUNT(*) from Employees WHERE DepartmentID = @departmentId
+---------------------------------------------------------------------------------------------
+09. Find Full Name
+
+CREATE PROC usp_GetHoldersFullName
+AS
+SELECT FirstName + ' ' + LastName as [Full Name]
+FROM AccountHolders
+---------------------------------------------------------------------------------------------
+10. People with Balance Higher Than
+
+Create PROC usp_GetHoldersWithBalanceHigherThan(@money DECIMAL(15,2))
+AS
+SELECT FirstName,LastName
+ FROM AccountHolders as ah
+ JOIN Accounts as a ON ah.Id = a.AccountHolderId
+GROUP BY FirstName,LastName
+ HAVING SUM(Balance) > @money
+ORDER BY FirstName,LastName
+---------------------------------------------------------------------------------------------
+11. Future Value Function
+
+CREATE FUNCTION ufn_CalculateFutureValue (@sum DECIMAL(18,4), @yearly FLOAT,@numberYears INT)
+RETURNS DECIMAL(18,4)
+AS
+BEGIN
+	DECLARE @result Decimal(18,4)
+	SET @result = @sum * (POWER(1 + @yearly,@numberYears))
+	RETURN @result
+END
+---------------------------------------------------------------------------------------------
+12. Calculating Interest
+
+CREATE PROC usp_CalculateFutureValueForAccount (@accID INT, @interestRate FLOAT)
+AS
+SELECT TOP(1) a.AccountHolderId,
+	   ah.FirstName,
+	   ah.LastName,
+	   a.Balance,
+	   dbo.ufn_CalculateFutureValue(Balance,@interestRate,5) as [Balance in 5 years]
+  FROM AccountHolders AS ah
+ JOIN Accounts AS a ON a.AccountHolderId = ah.Id
+ WHERE a.AccountHolderId = @accID
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
