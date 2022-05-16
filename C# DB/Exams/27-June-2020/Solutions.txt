@@ -157,9 +157,90 @@ WHERE j.Status = 'Finished'
 GROUP BY j.JobId
 ORDER BY Total DESC,j.JobId
 -------------------------------------------------------------------------------------------
+10. Missing Parts
 
+SELECT p.PartId,
+	p.Description,
+	pn.Quantity AS [Required],
+	p.StockQty AS [In Stock],
+	IIF(o.Delivered = 0, op.Quantity,0)
+FROM Parts AS p
+LEFT  JOIN PartsNeeded AS pn ON pn.PartId = p.PartId
+LEFT  JOIN OrderParts AS op ON op.PartId = p.PartId
+LEFT  JOIN Jobs AS j ON j.JobId = pn.JobId
+LEFT JOIN Orders AS o ON o.JobId = j.JobId
+WHERE j.Status != 'Finished' AND p.StockQty + IIF(o.Delivered = 0, op.Quantity,0) < pn.Quantity
+ORDER BY PartId
 -------------------------------------------------------------------------------------------
+11. Place Order
 
+CREATE PROCEDURE usp_PlaceOrder(
+					@jobId INT,
+					@serialNumber VARCHAR(50),
+					@quantity INT)
+AS
+BEGIN
+
+IF @quantity <= 0
+	THROW 50012,'Part quantity must be more than zero!',1
+ELSE IF NOT EXISTS(SELECT * FROM Jobs j WHERE j.JobId = @jobId)
+	THROW 50013, 'Job not found!',1
+ELSE IF EXISTS(SELECT * FROM Jobs j Where j.JobId = @jobId AND J.Status = 'Finished')
+	THROW 50011, 'This job is not active!',1
+ELSE IF NOT EXISTS(SELECT * FROM Parts P WHERE P.SerialNumber = @serialNumber)
+	THROW 50014, 'Part not found!', 1
+
+DECLARE @PartId INT 
+SELECT @PartId = P.PartId FROM Parts P WHERE P.SerialNumber=@serialNumber
+
+DECLARE @ExistingOrderId INT
+SELECT @ExistingOrderId = O.OrderId FROM Orders o
+	JOIN Jobs J ON J.JobId = O.JobId
+	JOIN OrderParts OP ON OP.OrderId=O.OrderId
+	 WHERE O.IssueDate IS NULL AND J.JobId = @jobId AND OP.PartId = @PartId
+
+IF (@ExistingOrderId IS NULL)
+BEGIN 
+	INSERT INTO Orders(JobId,IssueDate)
+	VALUES
+	(@jobId,Null)
+
+	SELECT @ExistingOrderId = O.OrderId FROM Orders O
+	JOIN Jobs J ON J.JobId = O.JobId
+	WHERE O.IssueDate IS NULL AND J.JobId = @jobId
+
+	   INSERT INTO OrderParts(OrderId,PartId,Quantity)
+	   VALUES
+	   (@ExistingOrderId,@PartId,@quantity)
+END
+ELSE 
+	BEGIN
+		UPDATE OrderParts
+		SET Quantity += @quantity
+		WHERE OrderId = @ExistingOrderId
+	END
+END
 -------------------------------------------------------------------------------------------
+12. Cost of Order
 
+CREATE FUNCTION udf_GetCost(@jobId INT)
+RETURNS DECIMAL(15,2)
+AS
+BEGIN
+DECLARE @result DECIMAL(15,2);
+SET @result = (
+SELECT SUM(p.Price * op.Quantity)
+	FROM Jobs AS j
+	JOIN Orders AS o ON o.JobId = j.JobId
+	JOIN OrderParts AS op ON op.OrderId = o.OrderId
+	JOIN Parts AS p ON p.PartId = op.PartId
+WHERE j.JobId = @jobId
+GROUP BY j.JobId )
+
+IF(@result IS NULL)
+ SET @result = 0
+
+RETURN @result
+
+END
 -------------------------------------------------------------------------------------------
