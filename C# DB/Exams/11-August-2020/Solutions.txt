@@ -143,9 +143,51 @@ GROUP BY d.Id,d.Name,i.Name,p.Name
 HAVING AVG(f.Rate) BETWEEN 5 AND 8
 ORDER BY d.Name,i.Name,p.Name
 ------------------------------------------------------------------------------------------
+10. Country Representative
 
+SELECT [Ranked].CountryName , Ranked.DistributorName
+FROM ( SELECT c.Name AS CountryName,
+		d.Name AS DistributorName,
+DENSE_RANK() OVER (PARTITION BY  c.Name ORDER BY COUNT(i.Id) DESC) AS Rank
+	FROM Countries AS c
+	JOIN Distributors AS d ON d.CountryId = c.Id
+	JOIN Ingredients AS i ON i.DistributorId = d.Id
+	GROUP BY c.Name,d.Name) AS [Ranked]
+WHERE [Ranked].[Rank] = 1
+ORDER BY [Ranked].CountryName, [Ranked].DistributorName
 ------------------------------------------------------------------------------------------
+11.Customers With Countries
 
+CREATE VIEW v_UserWithCountries 
+AS
+(
+SELECT CONCAT(C.FirstName, ' ', c.LastName) AS CustomerName,
+       C.Age AS Age,
+       C.Gender AS Gender,
+       C2.Name AS CountryName
+ FROM Customers AS C
+ JOIN Countries C2 ON C2.Id = C.CountryId
+)
 ------------------------------------------------------------------------------------------
+12. Delete Products
 
+CREATE TRIGGER dbo.ProductsToDelete
+    ON Products
+    INSTEAD OF DELETE
+    AS
+BEGIN
+    DECLARE
+        @deletedProductId INT = (SELECT p.Id
+                                 FROM Products AS p
+                                 JOIN deleted AS d ON d.Id = p.Id)
+    DELETE
+    FROM ProductsIngredients
+    WHERE ProductId = @deletedProductId
+    DELETE
+    FROM Feedbacks
+    WHERE ProductId = @deletedProductId
+    DELETE
+    FROM Products
+    WHERE Id = @deletedProductId
+END
 ------------------------------------------------------------------------------------------
